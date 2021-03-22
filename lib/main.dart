@@ -12,23 +12,41 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to Flutter',
       //routes: Route(),
-      home: Scaffold(
+      home: Home()
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
         appBar: AppBar(
-          title: Text('Welcome to Flutter'),
+          title: Text('Práctica Flutter'),
         ),
         body: Center(
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            children: <Widget>[_cardTipo1(), _cardTipo1(), _cardTipo2()],
+            children: <Widget>[
+              _cardTipo1(),
+              _cardTipo2(),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () => _showAlert(context),
+                  child: Text('Mostrar alerta'),
+                ),
+              )
+            ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
 Widget _cardTipo1() {
   return Card(
+    elevation: 5,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
     child: Column(
       children: <Widget>[
         ListTile(
@@ -54,8 +72,9 @@ Widget _cardTipo2() {
     child: Column(
       children: [
         FadeInImage(
-          placeholder: AssetImage('assets/jar-loading.gif'), 
-          image: NetworkImage('https://static.vecteezy.com/system/resources/previews/000/246/312/large_2x/mountain-lake-sunset-landscape-first-person-view-vector.jpg'),
+          placeholder: AssetImage('assets/jar-loading.gif'),
+          image: NetworkImage(
+              'https://static.vecteezy.com/system/resources/previews/000/246/312/large_2x/mountain-lake-sunset-landscape-first-person-view-vector.jpg'),
           fadeInDuration: Duration(milliseconds: 200),
           height: 400,
           fit: BoxFit.cover,
@@ -63,11 +82,45 @@ Widget _cardTipo2() {
 /*      Image(
           image: NetworkImage('https://static.vecteezy.com/system/resources/previews/000/246/312/large_2x/mountain-lake-sunset-landscape-first-person-view-vector.jpg'),
         ),
- */        Container(
+ */
+        Container(
           padding: EdgeInsets.all(10.0),
           child: Text('Descripción de la imagen'),
         )
       ],
     ),
+  );
+}
+
+void _showAlert(BuildContext context) {
+  print(context);
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text('Título'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Texto de la ventana emergente'),
+            FlutterLogo(
+              size: 100,
+            )
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(), 
+            child: Text('Cancelar')
+          ),
+          TextButton(
+            onPressed: (){}, 
+            child: Text('Ok')
+          )
+        ],
+      );
+    },
   );
 }
