@@ -7,7 +7,9 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
 
-  String _nombre;
+  String _nombre = '';
+  String _email = '';
+  String _password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,11 @@ class _InputPageState extends State<InputPage> {
         children: [
           _createInput(),
           Divider(),
-          _crearPersona()
+          _createEmailInput(),
+          Divider(),
+          _createPasswordInput(),
+          Divider(),
+          _crearPersona(),
         ],
       ),
     );
@@ -28,7 +34,7 @@ class _InputPageState extends State<InputPage> {
 
   Widget _createInput(){
     return TextField(
-      //autofocus: true,
+      autofocus: true,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -44,9 +50,42 @@ class _InputPageState extends State<InputPage> {
     );
   }
 
+  Widget _createEmailInput(){
+    return TextField(
+      //autofocus: true,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0)
+        ),
+        labelText: 'Email',
+        suffixIcon: Icon(Icons.alternate_email),
+        icon: Icon(Icons.email),
+      ),
+      onChanged: (valor) { setState((){_email = valor;}); },
+    );
+  }
+
+  Widget _createPasswordInput(){
+    return TextField(
+      //autofocus: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0)
+        ),
+        labelText: 'Password',
+        hintText: 'Password',
+        suffixIcon: Icon(Icons.lock),
+        icon: Icon(Icons.lock_open),
+      ),
+      onChanged: (valor) { setState((){_password = valor;}); },
+    );
+  }
+
   Widget _crearPersona(){
     return ListTile(
       title: Text('El texto del input es: $_nombre'),
+      subtitle: Text('El texto del input es: $_email, contraseña: $_password'),
     );
   }
 }
